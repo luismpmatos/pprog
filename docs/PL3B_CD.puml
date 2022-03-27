@@ -1,0 +1,99 @@
+@startuml
+'Configurations'
+skinparam ClassAttributeIconSize 0
+
+
+'Classes declaration'
+abstract class "Contribuinte" as contrib
+{
+    -String nome
+    -String morada
+    __
+    +abstract calcularImposto()
+    ..Getters..
+    +getNome()
+    +getMorada()
+    ..Setters..
+    +setNome()
+    +setMorada()
+}
+abstract class "ContribuinteComRendimentos" as contribRend
+{
+    -Double rendimentosTrabalho
+    -Double outrosRendimentos
+    __
+    +calcularImposto()
+    ..Getters..
+    +getRendimentosTrabalho()
+    +getOutrosRendimentos()
+    +abstract getTaxaRendimentosTrabalho()
+    +abstract getTaxaOutrosRendimentos()
+    ..Setters..
+    +setRendimentosTrabalho()
+    +setOutrosRendimentos()
+}
+class "Desempregado" as des
+{
+    -Double outrosRendimentos
+    -Integer mesesParagem
+    __
+    +calcularImposto()
+    ..Getters..
+    +getOutrosRendimentos()
+    ..Setters..
+    +setOutrosRendimentos()
+    +static setTaxaOutrosRendimentos()
+}
+class "Reformado" as ref
+{
+    -static Double taxaRendimentosTrabalho
+    -static Double taxaOutrosRendimentos
+    __
+    ..Getters..
+    +getTaxaRendimentosTrabalho()
+    +getTaxaOutrosRendimentos()
+    ..Setters..
+    +static setTaxaRendimentosTrabalho()
+    +static setTaxaOutrosRendimentos()
+}
+class "TrabalhadorOutrem" as tpo
+{
+    -String nomeEmpresa
+    -static Double taxaRendimentosTrabalhoNivel1
+    -static Double taxaRendimentosTrabalhoNivel2
+    -static Double taxaOutrosRendimentos
+    __
+    ..Getters..
+    +getTaxaRendimentosTrabalho()
+    +getTaxaOutrosRendimentos()
+    ..Setters..
+    +static setTaxaRendimentosTrabalhoNivel1()
+    +static setTaxaRendimentosTrabalhoNivel2()
+    +static setTaxaOutrosRendimentos()
+}
+class "TrabalhadorPropria" as tpc
+{
+    -String profissao
+    -static Double taxaRendimentosTrabalho
+    -static Double taxaOutrosRendimentosNivel1
+    -static Double taxaOutrosRendimentosNivel2
+    __
+    ..Getters..
+    +getTaxaRendimentosTrabalho()
+    +getTaxaOutrosRendimentos()
+    ..Setters..
+    +static setTaxaRendimentosTrabalho()
+    +static setTaxaOutrosRendimentosNivel1()
+    +static setTaxaOutrosRendimentosNivel2()
+}
+
+'Relations between classes'
+contrib <|-- des
+contrib <|-- contribRend
+contribRend <|-- ref
+contribRend <|-- tpo
+contribRend <|-- tpc
+
+
+
+@enduml
